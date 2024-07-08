@@ -3,7 +3,7 @@ import React from 'react'
 function Footer() {
   return (
     <footer>
-        <div className="lg:m-auto text-center text-black rounded-md lg:flex justify-between items-center px-1 sm:text-sm  md:px-4 font-semibold">   
+        <div className="text-center text-green-600 rounded-md lg:flex justify-between items-center px-1 sm:text-sm  md:px-4 font-semibold">   
             <div className="">
                 <h1>Image Classifier</h1>
             </div>
