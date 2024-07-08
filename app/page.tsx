@@ -37,7 +37,7 @@ export default function Home() {
         <main className="min-h-screen flex justify-center items-center">
             <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
                 <span className="text-sm mb-4 font-semibold">Upload an image to classify it among banana, apple, strawberries and mango</span>
-                <p className="font-bold">Note that this model is 65% accurate</p>
+                <p className="font-bold">Note that this model is 65% accurate!</p>
                 <div className="mb-8">
                     <div className="relative border hover:scale-[1.1] w-[300px] h-[300px] transition-all cursor-pointer">
                         {image ? (
