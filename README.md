@@ -1,6 +1,36 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118 fastapi uvicorn python-multipart
+
 ## Getting Started
+
+ "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "next dev",
+    "dev:backend": "cd ../backend && PYTHONPATH=.. uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+
+
+
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     const formData = new FormData(e.currentTarget);
+    //     try {
+    //         const response = await axios.post("http://localhost:8000/classify", formData);
+    //         const imageClass = response.data.class;
+    //         setImageClass(imageClass)
+    //     } catch (error) {
+    //         console.error("Error uploading file:", error);
+    //         setImageClass("");
+    //         alert("Please input any image found among to categories");
+    //     }
+    // };
+
+
+
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# model = ConvNeuralNet(num_classes=len(classes))
+# model.load_state_dict(torch.load('./models/model.pth', map_location=device))
+# model.eval()
+# model.to(device)
 
 First, run the development server:
 
