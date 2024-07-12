@@ -3,9 +3,9 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav className='uppercase max-w-[1180px] m-auto text-black bg-gray-100 rounded-md flex justify-between items-center h-10 shadow-sm border px-[10px] font-semibold'>
+    <nav className='max-w-[1180px] m-auto text-black bg-gray-100 rounded-md flex justify-between items-center h-10 shadow-sm border px-[10px] font-semibold'>
         <div className="">
-            <h1 className='text-green-600 sm:text-sm'>Friuts Classifier</h1>
+            <h1 className='text-blue-600 sm:text-sm'>Image Classifier</h1>
         </div>
         <ul>
             <li>

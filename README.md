@@ -64,3 +64,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+import os
+import sys
+
+# Add the parent directory to the sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+import torch
+from transformers import AutoProcessor, AutoModelForCausalLM, pipeline, BitsAndBytesConfig
+from backend.prompt import prompt, prompt2
+import requests
+from PIL import Image
+
+image = Image.open("../Apple - Copy/image.png")
+
+
+max_new_tokens = 200
+prompt = f"USER: <image>\n{prompt2}\nASSISTANT:"
+
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16
+)
+
+model_id = "llava-hf/llava-1.5-7b-hf"
+
+pipe = pipeline("image-to-text", model=model_id, model_kwargs={"quantization_config": quantization_config})
+# Ensure the model is downloaded and cached
+
+
+outputs = pipe(image, prompt=prompt, generate_kwargs={"max_new_tokens": 200})
+
+print(outputs[0]["generated_text"])
+
+
+
+<!-- pip install --upgrade --verbose --force-reinstall --no-cache-dir llama-cpp-python -->

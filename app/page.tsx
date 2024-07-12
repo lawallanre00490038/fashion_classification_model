@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 // import handleSubmit from "@/actions"
+import {imageCategories} from "@/categories"
 
 export default function Home() {
     const [image, setImage] = useState("");
@@ -26,9 +27,11 @@ export default function Home() {
             const response = await axios.post("https://lawallanre-image-classification.hf.space/classify", formData);
             const imageClass = response.data.class;
             setImageClass(imageClass)
+            alert(`You just uploaded a ${imageClass}`);
         } catch (error) {
             console.error("Error uploading file:", error);
             setImageClass("");
+            console.log(error);
             alert("Please input any image found among to categories");
         }
     };
@@ -36,8 +39,29 @@ export default function Home() {
     return (
         <main className="min-h-screen flex justify-center items-center">
             <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-                <span className="text-center text-sm mb-4 font-semibold text-green-600">Upload an image to classify it among banana, apple, strawberries and mango</span>
-                <p className="font-bold">Note that this model is 70% accurate!</p>
+
+                <div className="flex flex-col md:flex-row mb-4 justify-center items-center">
+                    <span className="text-center text-sm mb-2 md:mr-4 font-semibold text-green-600"> 
+                        {
+                            imageClass ? 
+                            (
+                                <p className="font-semibold">{`You just uploaded a ${imageClass}`}</p>
+                            ) : 
+                            (   
+                                <p>Check the class of image this model can classify:</p>
+                            )
+                        }
+                    </span> 
+                    <span>
+                        <select className="border">
+                        {
+                            imageCategories.map((category) => {
+                                return <option key={category}>{category}</option>;
+                            })
+                        }
+                        </select>
+                    </span>
+                </div>
                 <div className="mb-8">
                     <div className="relative border hover:scale-[1.1] w-[300px] h-[300px] transition-all cursor-pointer">
                         {image ? (
@@ -70,8 +94,8 @@ export default function Home() {
                 >
                     Get Image Class
                 </button>
-                <div className="mt-2 text-sm">
-                {imageClass ? (<p className="font-semibold">{`You just uploaded a ${imageClass}`}</p>) : (<p>Please input the image found among to categories</p>)}
+                <div className="mt-2 text-sm text-center">
+                {imageClass ? (<p className="font-semibold">{`You just uploaded a ${imageClass}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
                 </div>
             </form>
         </main>
