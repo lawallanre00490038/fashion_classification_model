@@ -103,12 +103,6 @@ export default function Home() {
                     name="image"
                     onChange={handleFileChange}
                 />
-                {/* <button
-                    type="submit"
-                    className="w-80 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition-all hover:font-semibold"
-                >
-                    Get Image Class
-                </button> */}
                 <button
                     type="submit"
                     className="w-80 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition-all hover:font-semibold flex items-center justify-center gap-4"
