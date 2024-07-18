@@ -50,7 +50,7 @@ export default function Home() {
             <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
 
                 <div className="flex flex-col md:flex-row mb-4 justify-center items-center">
-                    <span className="text-center text-sm mb-2 md:mr-4 font-semibold text-green-600"> 
+                    <span className="text-center text-sm mb-2 md:mr-4 font-semibold text-blue-600"> 
                         {
                             imageClass.Category ? 
                             (
