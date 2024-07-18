@@ -46,7 +46,7 @@ export default function Home() {
                         {
                             imageClass ? 
                             (
-                                <p className="font-semibold">{`You just uploaded a ${imageClass}`}</p>
+                                <p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>
                             ) : 
                             (   
                                 <p>Check the class of image this model can classify:</p>
