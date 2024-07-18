@@ -1,14 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef, useEffect  } from "react";
 import axios from "axios";
 // import handleSubmit from "@/actions"
+
 import { fashionCategories } from "@/categoriesFashion";
 
 export default function Home() {
     const [image, setImage] = useState("");
     const [imageClass, setImageClass] = useState<{ Category?: string, Type?: string }>({});
+    const resultRef = useRef<HTMLDivElement>(null);
 
     const handleFileChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
@@ -24,7 +26,7 @@ export default function Home() {
         const formData = new FormData(e.currentTarget);
         console.log(formData.get("image"));
         try {
-            const response = await axios.post("http://localhost:8000/classify", formData);
+            const response = await axios.post("https://lawallanre-fashion-materials-classification.hf.space/classify", formData);
             const imageClass = response.data;
             setImageClass(imageClass)
             console.log(imageClass);
@@ -36,6 +38,12 @@ export default function Home() {
             alert("Please input any image found among to categories");
         }
     };
+
+    useEffect(() => {
+        if (imageClass.Category && resultRef.current) {
+            resultRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [imageClass]);
 
     return (
         <main className="min-h-screen flex justify-center items-center">
@@ -97,8 +105,16 @@ export default function Home() {
                 >
                     Get Image Class
                 </button>
-                <div className="mt-2 text-sm text-center">
-                {imageClass.Category ? (<p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
+                <div className="mt-2 text-sm text-center" ref={resultRef}>
+                {imageClass.Category ? (
+                    <div>
+                        <span className="font-semibold">{`Category: ${imageClass.Category}`}</span> <br />
+                        <span className="font-semibold">{`Type: ${imageClass.Type}`}</span>
+                    </div>
+
+                    ) : 
+                    
+                    (<p>Please input any fruit image found among the categories above</p>)}
                 </div>
             </form>
         </main>
