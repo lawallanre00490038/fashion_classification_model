@@ -44,7 +44,7 @@ export default function Home() {
                 <div className="flex flex-col md:flex-row mb-4 justify-center items-center">
                     <span className="text-center text-sm mb-2 md:mr-4 font-semibold text-green-600"> 
                         {
-                            imageClass ? 
+                            imageClass.Category ? 
                             (
                                 <p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>
                             ) : 
@@ -98,7 +98,7 @@ export default function Home() {
                     Get Image Class
                 </button>
                 <div className="mt-2 text-sm text-center">
-                {imageClass ? (<p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
+                {imageClass.Category ? (<p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
                 </div>
             </form>
         </main>
