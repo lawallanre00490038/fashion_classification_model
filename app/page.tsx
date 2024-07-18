@@ -4,12 +4,11 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 // import handleSubmit from "@/actions"
-import {imageCategories} from "@/categories"
+import { fashionCategories } from "@/categoriesFashion";
 
 export default function Home() {
     const [image, setImage] = useState("");
-    const [imageClass, setImageClass] = useState("");
-
+    const [imageClass, setImageClass] = useState<{ Category?: string, Type?: string }>({});
 
     const handleFileChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
@@ -23,14 +22,16 @@ export default function Home() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
+        console.log(formData.get("image"));
         try {
-            const response = await axios.post("https://lawallanre-image-classification.hf.space/classify", formData);
-            const imageClass = response.data.class;
+            const response = await axios.post("http://localhost:8000/classify", formData);
+            const imageClass = response.data;
             setImageClass(imageClass)
-            alert(`You just uploaded a ${imageClass}`);
+            console.log(imageClass);
+            alert(`You just uploaded a ${imageClass.Category} with type of ${imageClass.Type}`);
         } catch (error) {
             console.error("Error uploading file:", error);
-            setImageClass("");
+            setImageClass({});
             console.log(error);
             alert("Please input any image found among to categories");
         }
@@ -53,12 +54,14 @@ export default function Home() {
                         }
                     </span> 
                     <span>
-                        <select className="border">
-                        {
-                            imageCategories.map((category) => {
-                                return <option key={category}>{category}</option>;
-                            })
-                        }
+                        <select className="border" name="category">
+                            {fashionCategories.map((category) => (
+                                <optgroup key={category.category} label={category.category}>
+                                    {category.types.map((type) => (
+                                        <option key={type}>{type}</option>
+                                    ))}
+                                </optgroup>
+                            ))}
                         </select>
                     </span>
                 </div>
@@ -95,7 +98,7 @@ export default function Home() {
                     Get Image Class
                 </button>
                 <div className="mt-2 text-sm text-center">
-                {imageClass ? (<p className="font-semibold">{`You just uploaded a ${imageClass}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
+                {imageClass ? (<p className="font-semibold">{`You just uploaded a ${imageClass.Category}`}</p>) : (<p>Please input any fruit image found among the categories above</p>)}
                 </div>
             </form>
         </main>
