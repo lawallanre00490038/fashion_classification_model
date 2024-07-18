@@ -6,11 +6,14 @@ import axios from "axios";
 // import handleSubmit from "@/actions"
 
 import { fashionCategories } from "@/categoriesFashion";
+import { Circles } from 'react-loader-spinner'
+
 
 export default function Home() {
     const [image, setImage] = useState("");
     const [imageClass, setImageClass] = useState<{ Category?: string, Type?: string }>({});
     const resultRef = useRef<HTMLDivElement>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFileChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
@@ -23,13 +26,14 @@ export default function Home() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData(e.currentTarget);
         console.log(formData.get("image"));
         try {
             const response = await axios.post("https://lawallanre-fashion-materials-classification.hf.space/classify", formData);
             const imageClass = response.data;
             setImageClass(imageClass)
-            console.log(imageClass);
+            setIsLoading(false);
             alert(`You just uploaded a ${imageClass.Category} with type of ${imageClass.Type}`);
         } catch (error) {
             console.error("Error uploading file:", error);
@@ -99,10 +103,25 @@ export default function Home() {
                     name="image"
                     onChange={handleFileChange}
                 />
-                <button
+                {/* <button
                     type="submit"
                     className="w-80 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition-all hover:font-semibold"
                 >
+                    Get Image Class
+                </button> */}
+                <button
+                    type="submit"
+                    className="w-80 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition-all hover:font-semibold flex items-center justify-center gap-4"
+                >
+                    { isLoading && (<Circles
+                                        height="30"
+                                        width="30"
+                                        color="white"
+                                        ariaLabel="circles-loading"
+                                        wrapperStyle={{}}
+                                        wrapperClass=""
+                                        visible={true}
+                                        />)}
                     Get Image Class
                 </button>
                 <div className="mt-2 text-sm text-center" ref={resultRef}>
