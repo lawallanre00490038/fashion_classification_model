@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useRef, useEffect  } from "react";
-import axios from "axios";
+import axios from "axios"
 // import handleSubmit from "@/actions"
 
 import { fashionCategories } from "@/categoriesFashion";
