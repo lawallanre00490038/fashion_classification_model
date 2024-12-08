@@ -30,7 +30,7 @@ export default function Home() {
         const formData = new FormData(e.currentTarget);
         console.log(formData.get("image"));
         try {
-            const response = await axios.post("https://lawallanre-fashion-materials-classification.hf.space/classify", formData);
+            const response = await axios.post("https://selldomeafrica-fashionclassifier.hf.space/classify", formData);
             const imageClass = response.data;
             setImageClass(imageClass)
             setIsLoading(false);
